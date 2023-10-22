@@ -4,15 +4,17 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class ServerWorker implements Runnable{
+
+public class ServerWorker implements Runnable {
 
     private Socket clientSocket;
     private Server server;
+    private String userName;
 
 
     //CONSTRUCTOR
 
-    public ServerWorker(Socket clientSocket, Server server){
+    public ServerWorker(Socket clientSocket, Server server) {
         this.clientSocket = clientSocket;
         this.server = server;
     }
@@ -23,6 +25,10 @@ public class ServerWorker implements Runnable{
         return clientSocket;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
     // METHODS
     public void receive() throws IOException {
 
@@ -30,13 +36,18 @@ public class ServerWorker implements Runnable{
 
         while (!clientSocket.isClosed()) {
 
-                String messageReceived = in.readLine();
-                System.out.println("Message received: " + messageReceived);
-                if(messageReceived != null){
-                    server.sendToAllClients(messageReceived);
-                }
+            String messageReceived = in.readLine();
+            System.out.println(messageReceived);
+            if (messageReceived != null) {
+                server.sendToAllClients(this.userName, messageReceived, this);
+            }
         }
     }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
 
     @Override
     public void run() {
@@ -47,3 +58,4 @@ public class ServerWorker implements Runnable{
         }
     }
 }
+

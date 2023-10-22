@@ -12,16 +12,19 @@ public class Client {
 
     private Socket clientSocket;
 
+
     //CONSTRUCTOR
     public Client(InetAddress ip, int portNumber) throws IOException {
-            clientSocket = new Socket(ip, portNumber);
-            Thread receiveThread = new Thread(this::receive);
-            receiveThread.start();
-            send();
+
+        clientSocket = new Socket(ip, portNumber);
+
+        Thread receiveThread = new Thread(this::receive);
+        receiveThread.start();
+        send();
     }
 
     //METHODS
-    public void receive(){
+    public void receive() {
 
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
@@ -29,14 +32,15 @@ public class Client {
             while (!clientSocket.isClosed()) {
 
                 String messageReceived = in.readLine();
-                System.out.println("Message received: " + messageReceived);
+                System.out.println(messageReceived);
             }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void send(){
+    public void send() {
 
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -46,12 +50,11 @@ public class Client {
 
                 String messageToBeSent = in.readLine();
 
-                if(messageToBeSent != null){
-
+                if (messageToBeSent != null) {
                     out.println(messageToBeSent);
                 }
             }
-        } catch (IOException e){
+        } catch (IOException e) {
             System.out.println("error sending");
         }
     }
@@ -61,10 +64,11 @@ public class Client {
 
         try {
 
-            Client clients = new Client(InetAddress.getLocalHost(), 8084);
+            Client clients = new Client(InetAddress.getLocalHost(), 8089);
 
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
 }
+
