@@ -33,5 +33,3 @@ Once connected, you can enter your username and start chatting with other users.
 ## Support and Issues
 
 If you encounter any issues or have questions related to the project, please reach out for assistance.
-
-Enjoy using the website and exploring the capabilities of the ChatGPT-integrated application!
